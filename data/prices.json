@@ -1,0 +1,1080 @@
+{
+  "lastMarketSnapshotAt": "2026-07-10T05:22:00.481Z",
+  "companies": {
+    "Player Head": {
+      "currentPrice": 100000,
+      "lastUpdateTime": "2026-07-08T20:48:08.926Z",
+      "lowestSeen": 100000,
+      "highestSeen": 100000,
+      "movingAverage": 100000,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:48:08.926Z",
+          "price": 100000
+        }
+      ]
+    },
+    "Furnace": {
+      "currentPrice": 800,
+      "lastUpdateTime": "2026-07-08T20:48:08.926Z",
+      "lowestSeen": 800,
+      "highestSeen": 800,
+      "movingAverage": 800,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:48:08.926Z",
+          "price": 800
+        }
+      ]
+    },
+    "Iron Ore": {
+      "currentPrice": 923,
+      "lastUpdateTime": "2026-07-08T20:48:08.926Z",
+      "lowestSeen": 923,
+      "highestSeen": 923,
+      "movingAverage": 923,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:48:08.926Z",
+          "price": 923
+        }
+      ]
+    },
+    "Wheat": {
+      "currentPrice": 941,
+      "lastUpdateTime": "2026-07-08T20:48:08.926Z",
+      "lowestSeen": 941,
+      "highestSeen": 941,
+      "movingAverage": 941,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:48:08.926Z",
+          "price": 941
+        }
+      ]
+    },
+    "Iron Sword": {
+      "currentPrice": 800,
+      "lastUpdateTime": "2026-07-08T20:48:08.926Z",
+      "lowestSeen": 800,
+      "highestSeen": 800,
+      "movingAverage": 800,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:48:08.926Z",
+          "price": 800
+        }
+      ]
+    },
+    "Oak Log": {
+      "currentPrice": 800,
+      "lastUpdateTime": "2026-07-08T20:48:08.926Z",
+      "lowestSeen": 800,
+      "highestSeen": 800,
+      "movingAverage": 800,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:48:08.926Z",
+          "price": 800
+        }
+      ]
+    },
+    "Empty Map": {
+      "currentPrice": 1047,
+      "lastUpdateTime": "2026-07-08T20:48:08.926Z",
+      "lowestSeen": 1047,
+      "highestSeen": 1047,
+      "movingAverage": 1047,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:48:08.926Z",
+          "price": 1047
+        }
+      ]
+    },
+    "Bricks": {
+      "currentPrice": 1200,
+      "lastUpdateTime": "2026-07-08T20:48:08.926Z",
+      "lowestSeen": 1200,
+      "highestSeen": 1200,
+      "movingAverage": 1200,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:48:08.926Z",
+          "price": 1200
+        }
+      ]
+    },
+    "Clock": {
+      "currentPrice": 1000,
+      "lastUpdateTime": "2026-07-08T20:48:08.926Z",
+      "lowestSeen": 1000,
+      "highestSeen": 1000,
+      "movingAverage": 1000,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:48:08.926Z",
+          "price": 1000
+        }
+      ]
+    },
+    "Block of Gold": {
+      "currentPrice": 100000,
+      "lastUpdateTime": "2026-07-08T20:48:08.926Z",
+      "lowestSeen": 100000,
+      "highestSeen": 100000,
+      "movingAverage": 100000,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:48:08.926Z",
+          "price": 100000
+        }
+      ]
+    },
+    "Book": {
+      "currentPrice": 1000,
+      "lastUpdateTime": "2026-07-08T20:48:08.926Z",
+      "lowestSeen": 1000,
+      "highestSeen": 1000,
+      "movingAverage": 1000,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:48:08.926Z",
+          "price": 1000
+        }
+      ]
+    },
+    "5 min": {
+      "currentPrice": 1000,
+      "lastUpdateTime": "2026-07-08T21:00:29.246Z",
+      "lowestSeen": 1000,
+      "highestSeen": 1000,
+      "movingAverage": 1000,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-08T20:50:10.075Z",
+          "price": 1000
+        },
+        {
+          "timestamp": "2026-07-08T20:51:51.509Z",
+          "price": 1000
+        },
+        {
+          "timestamp": "2026-07-08T20:52:37.201Z",
+          "price": 1000
+        },
+        {
+          "timestamp": "2026-07-08T20:53:22.192Z",
+          "price": 1000
+        },
+        {
+          "timestamp": "2026-07-08T21:00:29.246Z",
+          "price": 1000
+        }
+      ]
+    },
+    "Furnace Masters Inc": {
+      "currentPrice": 849.32,
+      "lastUpdateTime": "2026-07-10T05:22:00.481Z",
+      "lowestSeen": 800,
+      "highestSeen": 1200,
+      "movingAverage": 801.6526666666664,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-09T17:36:52.435Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:37:16.351Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:37:26.827Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:31.917Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:36.999Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:42.067Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:38:27.739Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:39:10.235Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:39:31.198Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:40:13.786Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:41:04.582Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:41:52.714Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:26.827Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:31.869Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:36.918Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:41.963Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:43:24.815Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:44:02.049Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:44:38.382Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:45:18.485Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:46:05.411Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:46:56.786Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:47:26.828Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:47:31.870Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:47:36.904Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:48:12.859Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:48:56.216Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:49:36.130Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:59:32.332Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-10T05:22:00.481Z",
+          "price": 849.32
+        }
+      ]
+    },
+    "UB Mines Corp": {
+      "currentPrice": 1200,
+      "lastUpdateTime": "2026-07-10T05:22:00.481Z",
+      "lowestSeen": 800,
+      "highestSeen": 1200,
+      "movingAverage": 821.9579999999997,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-09T17:36:52.435Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:16.351Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:26.827Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:37:31.917Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:37:36.999Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:37:42.067Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:38:27.739Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:39:10.235Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:39:31.198Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:40:13.786Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:41:04.582Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:41:52.714Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:42:26.827Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:42:31.869Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:42:36.918Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:42:41.963Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:43:24.815Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:44:02.049Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:44:38.382Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:45:18.485Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:46:05.411Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:46:56.786Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:47:26.828Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:47:31.870Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:47:36.904Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:48:12.859Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:48:56.216Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:49:36.130Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:59:32.332Z",
+          "price": 1058.66
+        },
+        {
+          "timestamp": "2026-07-10T05:22:00.481Z",
+          "price": 1200
+        }
+      ]
+    },
+    "Golden Harvest Ltd": {
+      "currentPrice": 800,
+      "lastUpdateTime": "2026-07-10T05:22:00.481Z",
+      "lowestSeen": 800,
+      "highestSeen": 1200,
+      "movingAverage": 825.966,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-09T17:36:52.435Z",
+          "price": 989.39
+        },
+        {
+          "timestamp": "2026-07-09T17:37:16.351Z",
+          "price": 989.39
+        },
+        {
+          "timestamp": "2026-07-09T17:37:26.827Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:31.917Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:36.999Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:42.067Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:38:27.739Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:39:10.235Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:39:31.198Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:40:13.786Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:41:04.582Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:41:52.714Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:26.827Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:31.869Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:36.918Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:41.963Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:43:24.815Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:44:02.049Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:44:38.382Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:45:18.485Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:46:05.411Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:46:56.786Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:47:26.828Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:47:31.870Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:47:36.904Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:48:12.859Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:48:56.216Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:49:36.130Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:59:32.332Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-10T05:22:00.481Z",
+          "price": 800
+        }
+      ]
+    },
+    "World Explorers Ltd": {
+      "currentPrice": 800,
+      "lastUpdateTime": "2026-07-10T05:22:00.481Z",
+      "lowestSeen": 800,
+      "highestSeen": 1200,
+      "movingAverage": 1021.8120000000001,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-09T17:36:52.435Z",
+          "price": 1004.1
+        },
+        {
+          "timestamp": "2026-07-09T17:37:16.351Z",
+          "price": 1004.1
+        },
+        {
+          "timestamp": "2026-07-09T17:37:26.827Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-09T17:37:31.917Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-09T17:37:36.999Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-09T17:37:42.067Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-09T17:38:27.739Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-09T17:39:10.235Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-09T17:39:31.198Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-09T17:40:13.786Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-09T17:41:04.582Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-09T17:41:52.714Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-09T17:42:26.827Z",
+          "price": 831.73
+        },
+        {
+          "timestamp": "2026-07-09T17:42:31.869Z",
+          "price": 831.73
+        },
+        {
+          "timestamp": "2026-07-09T17:42:36.918Z",
+          "price": 831.73
+        },
+        {
+          "timestamp": "2026-07-09T17:42:41.963Z",
+          "price": 831.73
+        },
+        {
+          "timestamp": "2026-07-09T17:43:24.815Z",
+          "price": 831.73
+        },
+        {
+          "timestamp": "2026-07-09T17:44:02.049Z",
+          "price": 831.73
+        },
+        {
+          "timestamp": "2026-07-09T17:44:38.382Z",
+          "price": 831.73
+        },
+        {
+          "timestamp": "2026-07-09T17:45:18.485Z",
+          "price": 831.73
+        },
+        {
+          "timestamp": "2026-07-09T17:46:05.411Z",
+          "price": 831.73
+        },
+        {
+          "timestamp": "2026-07-09T17:46:56.786Z",
+          "price": 831.73
+        },
+        {
+          "timestamp": "2026-07-09T17:47:26.828Z",
+          "price": 1054.81
+        },
+        {
+          "timestamp": "2026-07-09T17:47:31.870Z",
+          "price": 1054.81
+        },
+        {
+          "timestamp": "2026-07-09T17:47:36.904Z",
+          "price": 1054.81
+        },
+        {
+          "timestamp": "2026-07-09T17:48:12.859Z",
+          "price": 1054.81
+        },
+        {
+          "timestamp": "2026-07-09T17:48:56.216Z",
+          "price": 1054.81
+        },
+        {
+          "timestamp": "2026-07-09T17:49:36.130Z",
+          "price": 1054.81
+        },
+        {
+          "timestamp": "2026-07-09T17:59:32.332Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-10T05:22:00.481Z",
+          "price": 800
+        }
+      ]
+    },
+    "BuildRight Corp": {
+      "currentPrice": 800.01,
+      "lastUpdateTime": "2026-07-10T05:22:00.481Z",
+      "lowestSeen": 800,
+      "highestSeen": 1200,
+      "movingAverage": 811.6946666666665,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-09T17:36:52.435Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:16.351Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:26.827Z",
+          "price": 835.07
+        },
+        {
+          "timestamp": "2026-07-09T17:37:31.917Z",
+          "price": 835.07
+        },
+        {
+          "timestamp": "2026-07-09T17:37:36.999Z",
+          "price": 835.07
+        },
+        {
+          "timestamp": "2026-07-09T17:37:42.067Z",
+          "price": 835.07
+        },
+        {
+          "timestamp": "2026-07-09T17:38:27.739Z",
+          "price": 835.07
+        },
+        {
+          "timestamp": "2026-07-09T17:39:10.235Z",
+          "price": 835.07
+        },
+        {
+          "timestamp": "2026-07-09T17:39:31.198Z",
+          "price": 835.07
+        },
+        {
+          "timestamp": "2026-07-09T17:40:13.786Z",
+          "price": 835.07
+        },
+        {
+          "timestamp": "2026-07-09T17:41:04.582Z",
+          "price": 835.07
+        },
+        {
+          "timestamp": "2026-07-09T17:41:52.714Z",
+          "price": 835.07
+        },
+        {
+          "timestamp": "2026-07-09T17:42:26.827Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:31.869Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:36.918Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:41.963Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:43:24.815Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:44:02.049Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:44:38.382Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:45:18.485Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:46:05.411Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:46:56.786Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:47:26.828Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:47:31.870Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:47:36.904Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:48:12.859Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:48:56.216Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:49:36.130Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:59:32.332Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-10T05:22:00.481Z",
+          "price": 800.01
+        }
+      ]
+    },
+    "Hunter's Guild": {
+      "currentPrice": 800.01,
+      "lastUpdateTime": "2026-07-10T05:22:00.481Z",
+      "lowestSeen": 800,
+      "highestSeen": 1200,
+      "movingAverage": 804.7483333333333,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-09T17:36:52.435Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:16.351Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:26.827Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:31.917Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:36.999Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:42.067Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:38:27.739Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:39:10.235Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:39:31.198Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:40:13.786Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:41:04.582Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:41:52.714Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:42:26.827Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:42:31.869Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:42:36.918Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:42:41.963Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:43:24.815Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:44:02.049Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:44:38.382Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:45:18.485Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:46:05.411Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:46:56.786Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:47:26.828Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:47:31.870Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:47:36.904Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:48:12.859Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:48:56.216Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:49:36.130Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:59:32.332Z",
+          "price": 942.32
+        },
+        {
+          "timestamp": "2026-07-10T05:22:00.481Z",
+          "price": 800.01
+        }
+      ]
+    },
+    "Timber King Inc": {
+      "currentPrice": 1200,
+      "lastUpdateTime": "2026-07-10T05:22:00.481Z",
+      "lowestSeen": 800,
+      "highestSeen": 1200,
+      "movingAverage": 850.655333333333,
+      "historicalPrices": [
+        {
+          "timestamp": "2026-07-09T17:36:52.435Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:16.351Z",
+          "price": 800.01
+        },
+        {
+          "timestamp": "2026-07-09T17:37:26.827Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:37:31.917Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:37:36.999Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:37:42.067Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:38:27.739Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:39:10.235Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:39:31.198Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:40:13.786Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:41:04.582Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:41:52.714Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:42:26.827Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:42:31.869Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:42:36.918Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:42:41.963Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:43:24.815Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:44:02.049Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:44:38.382Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:45:18.485Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:46:05.411Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:46:56.786Z",
+          "price": 800
+        },
+        {
+          "timestamp": "2026-07-09T17:47:26.828Z",
+          "price": 919.94
+        },
+        {
+          "timestamp": "2026-07-09T17:47:31.870Z",
+          "price": 919.94
+        },
+        {
+          "timestamp": "2026-07-09T17:47:36.904Z",
+          "price": 919.94
+        },
+        {
+          "timestamp": "2026-07-09T17:48:12.859Z",
+          "price": 919.94
+        },
+        {
+          "timestamp": "2026-07-09T17:48:56.216Z",
+          "price": 919.94
+        },
+        {
+          "timestamp": "2026-07-09T17:49:36.130Z",
+          "price": 919.94
+        },
+        {
+          "timestamp": "2026-07-09T17:59:32.332Z",
+          "price": 1200
+        },
+        {
+          "timestamp": "2026-07-10T05:22:00.481Z",
+          "price": 1200
+        }
+      ]
+    }
+  }
+}

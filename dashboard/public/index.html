@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UB Trading Terminal · Multi-Bot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e14; --panel: #12171f; --panel-2: #1a2029;
+    --border: #1f2733; --border-strong: #2a3441;
+    --text: #e6edf3; --muted: #6e7d8f; --dim: #4a5566;
+    --accent: #7dd3fc; --up: #34d399; --down: #f87171; --gold: #fbbf24;
+    --pill: rgba(125, 211, 252, 0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Space Grotesk', -apple-system, system-ui, sans-serif;
+    font-size: 14px; overflow: hidden;
+    background-image:
+      radial-gradient(ellipse 800px 400px at 15% 10%, rgba(125, 211, 252, 0.04), transparent),
+      radial-gradient(ellipse 600px 300px at 85% 90%, rgba(52, 211, 153, 0.03), transparent);
+  }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; }
+
+  .app {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    height: 100vh;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  /* Sidebar */
+  aside {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .sidebar-header {
+    display: flex; align-items: center; gap: 10px;
+    padding-bottom: 12px; margin-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .brand-mark {
+    width: 30px; height: 30px;
+    background: linear-gradient(135deg, var(--accent), #a5f3fc);
+    border-radius: 6px; display: grid; place-items: center;
+    color: #0a0e14; font-weight: 700; font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .brand-name { font-weight: 700; font-size: 12px; letter-spacing: 0.5px; }
+  .brand-sub { font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .conn-pill {
+    margin-left: auto;
+    padding: 3px 8px; border-radius: 999px;
+    background: var(--panel-2); border: 1px solid var(--border-strong);
+    font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600;
+    color: var(--muted); display: flex; align-items: center; gap: 6px;
+  }
+  .conn-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
+  .conn-pill.live .dot { background: var(--up); box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.15); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+  .section-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); font-weight: 600; margin-bottom: 8px;
+  }
+
+  .bot-list {
+    flex: 1; overflow-y: auto; margin: 0 -4px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .bot-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .bot-row:hover { background: var(--panel-2); }
+  .bot-row.active {
+    background: var(--panel-2);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.05);
+  }
+  .bot-row .status-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--muted);
+  }
+  .bot-row .status-dot.online { background: var(--up); box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.15); }
+  .bot-row .status-dot.connecting { background: var(--gold); box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.15); }
+  .bot-row .status-dot.offline { background: var(--down); }
+  .bot-row .info { min-width: 0; }
+  .bot-row .username {
+    font-weight: 600; font-size: 13px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bot-row .balance {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--muted); margin-top: 2px;
+  }
+  .bot-row .remove-btn {
+    background: transparent; border: none; color: var(--dim);
+    font-family: 'JetBrains Mono', monospace; font-size: 14px;
+    cursor: pointer; padding: 4px 8px; border-radius: 4px;
+    opacity: 0; transition: opacity 0.12s, background 0.12s, color 0.12s;
+  }
+  .bot-row:hover .remove-btn { opacity: 1; }
+  .bot-row .remove-btn:hover { background: rgba(248, 113, 113, 0.1); color: var(--down); }
+
+  .empty-sidebar {
+    text-align: center; color: var(--muted); font-size: 12px;
+    padding: 40px 12px;
+  }
+
+  .add-bot-form {
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+  }
+  .add-bot-input-row {
+    display: flex; gap: 6px;
+  }
+  .add-bot-form input {
+    flex: 1; min-width: 0;
+    background: var(--panel-2); border: 1px solid var(--border-strong);
+    border-radius: 6px; padding: 8px 10px;
+    color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    outline: none; transition: border-color 0.12s;
+  }
+  .add-bot-form input:focus { border-color: var(--accent); }
+  .add-bot-form input::placeholder { color: var(--dim); }
+  .add-bot-btn {
+    background: var(--accent); color: #0a0e14; border: none; border-radius: 6px;
+    padding: 8px 12px; font-family: 'JetBrains Mono', monospace;
+    font-weight: 700; font-size: 11px; letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+  .add-bot-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .add-bot-error {
+    font-size: 10px; color: var(--down); padding: 6px 2px 0;
+    min-height: 14px;
+  }
+
+  /* Main */
+  main {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 16px;
+    min-height: 0;
+  }
+
+  header.top-bar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 14px 20px;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; gap: 24px;
+  }
+  .selected-bot-info { display: flex; flex-direction: column; }
+  .selected-bot-info .label {
+    font-size: 10px; color: var(--muted);
+    letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+  }
+  .selected-bot-info .name {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700; font-size: 20px; margin-top: 2px;
+  }
+  .top-stats { display: flex; gap: 32px; align-items: center; }
+  .stat { display: flex; flex-direction: column; align-items: flex-end; }
+  .stat-label {
+    font-size: 10px; color: var(--muted);
+    letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500;
+  }
+  .stat-value { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 20px; }
+  .stat-value.balance { color: var(--gold); }
+  .stat-value.status-online { color: var(--up); }
+  .stat-value.status-offline { color: var(--down); }
+  .stat-value.status-connecting { color: var(--gold); }
+
+  .content {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+    min-height: 0;
+  }
+
+  .panel {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px;
+    display: flex; flex-direction: column;
+    min-height: 0; overflow: hidden;
+  }
+  .panel-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 12px; margin-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-title {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); font-weight: 600;
+  }
+  .panel-title::before {
+    content: ''; display: inline-block;
+    width: 6px; height: 6px; background: var(--accent);
+    margin-right: 8px; vertical-align: middle;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; background: var(--pill); color: var(--accent);
+    padding: 2px 8px; border-radius: 4px; font-weight: 600;
+  }
+
+  .prices { grid-column: 1; grid-row: 1; }
+  .price-list { overflow-y: auto; flex: 1; margin: -4px; padding: 4px; }
+  .price-row {
+    display: grid; grid-template-columns: 1fr auto auto;
+    align-items: center; gap: 12px;
+    padding: 10px 8px; border-bottom: 1px solid var(--border);
+  }
+  .price-row:last-child { border-bottom: none; }
+  .price-row .name { font-weight: 500; font-size: 13px; }
+  .price-row .sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .price-row .amount {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700; font-size: 15px; text-align: right;
+  }
+  .price-row .change {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600; text-align: right;
+    min-width: 60px; padding: 3px 8px; border-radius: 4px;
+  }
+  .change.up { background: rgba(52, 211, 153, 0.12); color: var(--up); }
+  .change.down { background: rgba(248, 113, 113, 0.12); color: var(--down); }
+  .change.flat { background: var(--panel-2); color: var(--muted); }
+  .price-row.flash-up { animation: flashUp 0.6s; }
+  .price-row.flash-down { animation: flashDown 0.6s; }
+  @keyframes flashUp { 0% { background: rgba(52, 211, 153, 0.2); } 100% { background: transparent; } }
+  @keyframes flashDown { 0% { background: rgba(248, 113, 113, 0.2); } 100% { background: transparent; } }
+
+  .portfolio { grid-column: 1; grid-row: 2; }
+  .portfolio-summary {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin-bottom: 12px; padding: 12px;
+    background: var(--panel-2); border-radius: 8px;
+  }
+  .portfolio-summary .stat { align-items: center; }
+  .portfolio-summary .stat-value { font-size: 15px; }
+  .portfolio-list { overflow-y: auto; flex: 1; }
+  .holding {
+    display: grid; grid-template-columns: 1fr auto auto auto;
+    align-items: center; gap: 12px;
+    padding: 10px 8px; border-bottom: 1px solid var(--border);
+  }
+  .holding:last-child { border-bottom: none; }
+  .holding .h-name { font-weight: 500; font-size: 13px; }
+  .holding .h-sub { font-size: 10px; color: var(--muted); }
+  .holding .h-cell {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; text-align: right;
+  }
+  .holding .h-cell .cell-label {
+    display: block; font-size: 9px; color: var(--dim);
+    letter-spacing: 0.5px; text-transform: uppercase;
+    margin-bottom: 2px; font-family: 'Space Grotesk', sans-serif;
+  }
+  .empty-state {
+    text-align: center; padding: 40px 16px;
+    color: var(--muted); font-size: 12px;
+  }
+
+  .terminal { grid-column: 2; grid-row: 1; padding-bottom: 0; }
+  .chat { grid-column: 2; grid-row: 2; }
+  .term-log {
+    flex: 1; overflow-y: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; line-height: 1.7;
+    padding: 4px 4px 12px; scroll-behavior: smooth;
+  }
+  .log-line {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 10px;
+    padding: 2px 0;
+  }
+  .log-time { color: var(--dim); font-size: 11px; }
+  .log-level {
+    font-size: 10px; font-weight: 700;
+    padding: 0 6px; border-radius: 3px; align-self: center;
+    letter-spacing: 0.5px; min-width: 44px; text-align: center;
+  }
+  .log-msg { word-break: break-word; }
+  .lvl-INFO { background: rgba(125, 211, 252, 0.15); color: var(--accent); }
+  .lvl-WARN { background: rgba(251, 191, 36, 0.15); color: var(--gold); }
+  .lvl-ERROR { background: rgba(248, 113, 113, 0.15); color: var(--down); }
+  .lvl-DEBUG { background: var(--panel-2); color: var(--muted); }
+  .lvl-CMD { background: rgba(125, 211, 252, 0.2); color: var(--accent); }
+  .lvl-CHAT { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; }
+  .lvl-TRADE { background: rgba(52, 211, 153, 0.15); color: var(--up); }
+
+  .term-input-wrap {
+    padding: 12px 0 16px;
+    margin: 0 -18px 0; padding-left: 18px; padding-right: 18px;
+    background: var(--panel); border-top: 1px solid var(--border);
+  }
+  .term-input-row {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--panel-2); border: 1px solid var(--border-strong);
+    border-radius: 8px; padding: 10px 14px;
+    transition: border-color 0.15s;
+  }
+  .term-input-row:focus-within { border-color: var(--accent); }
+  .prompt {
+    color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: 700;
+  }
+  #cmd-input {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  #cmd-input::placeholder { color: var(--dim); }
+  .send-btn {
+    background: var(--accent); color: #0a0e14; border: none;
+    border-radius: 6px; padding: 6px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700; font-size: 11px; letter-spacing: 1px; cursor: pointer;
+  }
+  .term-hint {
+    font-size: 10px; color: var(--dim);
+    padding: 6px 4px 0; letter-spacing: 0.3px;
+  }
+  .term-hint kbd {
+    background: var(--panel-2); padding: 1px 5px;
+    border-radius: 3px; border: 1px solid var(--border-strong);
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted);
+  }
+  #panel-terminal .term-input-wrap { display: none; }
+
+  .no-bot-selected {
+    grid-column: 1 / -1; grid-row: 1 / -1;
+    display: grid; place-items: center;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--muted); font-size: 14px;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="sidebar-header">
+      <div class="brand-mark">UB</div>
+      <div>
+        <div class="brand-name">Trading Terminal</div>
+        <div class="brand-sub">Multi-Bot</div>
+      </div>
+      <div class="conn-pill" id="conn-pill"><div class="dot"></div><span id="conn-text">…</span></div>
+    </div>
+
+    <div class="section-label">Bots</div>
+    <div class="bot-list" id="bot-list">
+      <div class="empty-sidebar">No bots added yet. Add one below.</div>
+    </div>
+
+    <form class="add-bot-form" id="add-bot-form">
+      <div class="section-label">Add New Bot</div>
+      <div class="add-bot-input-row">
+        <input id="new-username" type="text" placeholder="Minecraft username" autocomplete="off" spellcheck="false" maxlength="16">
+        <button class="add-bot-btn" type="submit">Add</button>
+      </div>
+      <div class="add-bot-error" id="add-error"></div>
+    </form>
+  </aside>
+
+  <main>
+    <header class="top-bar">
+      <div class="selected-bot-info">
+        <div class="label">Active Bot</div>
+        <div class="name" id="active-bot-name">—</div>
+      </div>
+      <div class="top-stats">
+        <div class="stat">
+          <div class="stat-label">Balance</div>
+          <div class="stat-value balance" id="balance">$0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Portfolio</div>
+          <div class="stat-value" id="portfolio-value">$0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Status</div>
+          <div class="stat-value status-offline" id="bot-status">OFFLINE</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content" id="content">
+      <div class="no-bot-selected" id="no-bot-selected">
+        Select or add a bot to get started.
+      </div>
+
+      <section class="panel prices" style="display:none;" id="panel-prices">
+        <div class="panel-header">
+          <div class="panel-title">Live Market Prices</div>
+          <div class="badge" id="prices-count">0 companies</div>
+        </div>
+        <div class="price-list" id="price-list">
+          <div class="empty-state">Waiting for market data…</div>
+        </div>
+      </section>
+
+      <section class="panel portfolio" style="display:none;" id="panel-portfolio">
+        <div class="panel-header">
+          <div class="panel-title">Portfolio Holdings</div>
+          <div class="badge" id="holdings-count">0 positions</div>
+        </div>
+        <div class="portfolio-summary">
+          <div class="stat">
+            <div class="stat-label">Invested</div>
+            <div class="stat-value mono" id="pf-invested">$0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Unrealized</div>
+            <div class="stat-value mono" id="pf-unrealized">$0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Realized</div>
+            <div class="stat-value mono" id="pf-realized">$0</div>
+          </div>
+        </div>
+        <div class="portfolio-list" id="portfolio-list">
+          <div class="empty-state">Awaiting portfolio sync…</div>
+        </div>
+      </section>
+
+      <section class="panel terminal" style="display:none;" id="panel-terminal">
+        <div class="panel-header">
+          <div class="panel-title">Market Activity</div>
+          <div class="badge" id="log-count">0 events</div>
+        </div>
+        <div class="term-log" id="term-log"></div>
+        <div class="term-input-wrap">
+          <div class="term-input-row">
+            <span class="prompt">&gt;</span>
+            <input id="cmd-input" type="text" placeholder="Commands are available in the separate Chat Terminal" autocomplete="off" spellcheck="false">
+            <button class="send-btn" id="send-btn">SEND</button>
+          </div>
+          <div class="term-hint">
+            <kbd>↑</kbd> <kbd>↓</kbd> history · <kbd>Enter</kbd> send · Commands run against the ACTIVE bot only
+          </div>
+        </div>
+      </section>
+
+      <section class="panel chat" style="display:none;" id="panel-chat">
+        <div class="panel-header">
+          <div class="panel-title">Minecraft Chat</div>
+          <div class="badge" id="chat-count">0 messages</div>
+        </div>
+        <div class="term-log" id="chat-log">
+          <div class="empty-state">Waiting for Minecraft chat…</div>
+        </div>
+        <div class="term-input-wrap">
+          <div class="term-input-row">
+            <span class="prompt">&gt;</span>
+            <input id="chat-cmd-input" type="text" placeholder="Chat message or command" autocomplete="off" spellcheck="false">
+            <button class="send-btn" id="chat-send-btn">SEND</button>
+          </div>
+          <div class="term-hint">Press Enter to send to the active bot.</div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const $ = (id) => document.getElementById(id);
+  const botListEl = $('bot-list');
+  const priceList = $('price-list');
+  const portfolioList = $('portfolio-list');
+  const termLog = $('term-log');
+  const chatLog = $('chat-log');
+  const cmdInput = $('chat-cmd-input');
+  const sendBtn = $('chat-send-btn');
+  const connPill = $('conn-pill');
+  const connText = $('conn-text');
+
+  // Per-bot state
+  const botsById = new Map(); // id -> { id, username, status, balance, portfolio, prices, priceCache, logs, chat }
+  let activeBotId = null;
+  const cmdHistory = [];
+  let historyIdx = -1;
+  const MAX_VISIBLE_LOGS = 200;
+  const pendingLogRenders = new Set();
+
+  function ensureBot(id, username) {
+    let b = botsById.get(id);
+    if (!b) {
+      b = {
+        id, username: username || id,
+        status: 'connecting', balance: 0,
+        portfolio: null, prices: [],
+        priceCache: new Map(),
+        logs: [], chat: []
+      };
+      botsById.set(id, b);
+    } else if (username && !b.username) {
+      b.username = username;
+    }
+    return b;
+  }
+
+  function fmtMoney(n, opts = {}) {
+    const num = Number(n);
+    if (!Number.isFinite(num)) return '$—';
+    const sign = num < 0 ? '-' : (opts.sign && num > 0 ? '+' : '');
+    const abs = Math.abs(num);
+    if (abs >= 1000000) return sign + '$' + (abs / 1000000).toFixed(2) + 'M';
+    if (abs >= 10000) return sign + '$' + (abs / 1000).toFixed(1) + 'K';
+    return sign + '$' + abs.toLocaleString('en-US', { maximumFractionDigits: 2 });
+  }
+
+  function fmtTime(iso) {
+    try { return new Date(iso).toTimeString().slice(0, 8); }
+    catch (_) { return '--:--:--'; }
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function renderBotList() {
+    const bots = Array.from(botsById.values());
+    if (bots.length === 0) {
+      botListEl.innerHTML = '<div class="empty-sidebar">No bots added yet. Add one below.</div>';
+      return;
+    }
+    botListEl.innerHTML = '';
+    for (const b of bots) {
+      const row = document.createElement('div');
+      row.className = 'bot-row' + (b.id === activeBotId ? ' active' : '');
+      row.dataset.id = b.id;
+      row.innerHTML =
+        '<div class="status-dot ' + (b.status || 'offline') + '"></div>' +
+        '<div class="info">' +
+          '<div class="username">' + escapeHtml(b.username) + '</div>' +
+          '<div class="balance">' + fmtMoney(b.balance) + '</div>' +
+        '</div>' +
+        '<button class="remove-btn" title="Remove bot" data-id="' + escapeHtml(b.id) + '">×</button>';
+      row.addEventListener('click', (e) => {
+        if (e.target.classList.contains('remove-btn')) return;
+        selectBot(b.id);
+      });
+      botListEl.appendChild(row);
+    }
+    botListEl.querySelectorAll('.remove-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        const bot = botsById.get(id);
+        if (!bot) return;
+        if (!confirm('Remove bot ' + bot.username + '?')) return;
+        await fetch('/bots/' + encodeURIComponent(id), { method: 'DELETE' });
+      });
+    });
+  }
+
+  function selectBot(id) {
+    activeBotId = id;
+    const b = botsById.get(id);
+    if (!b) return;
+    $('active-bot-name').textContent = b.username;
+    updateHeader(b);
+    renderPrices(b);
+    renderPortfolio(b);
+    renderLogs(b);
+    renderChat(b);
+    $('no-bot-selected').style.display = 'none';
+    $('panel-prices').style.display = '';
+    $('panel-portfolio').style.display = '';
+    $('panel-terminal').style.display = '';
+    $('panel-chat').style.display = '';
+    renderBotList();
+    cmdInput.focus();
+  }
+
+  function updateHeader(b) {
+    if (activeBotId !== b.id) return;
+    $('balance').textContent = fmtMoney(b.balance);
+    const s = b.status || 'offline';
+    const el = $('bot-status');
+    el.textContent = s.toUpperCase();
+    el.className = 'stat-value status-' + s;
+
+    // Portfolio total value (from prices)
+    let total = 0;
+    if (b.portfolio?.companies) {
+      for (const entry of Object.values(b.portfolio.companies)) {
+        const shares = Number(entry.shares || entry.ownedShares || 0);
+        const price = b.priceCache.get(entry.company) ?? Number(entry.currentPrice || 0);
+        total += shares * price;
+      }
+    }
+    $('portfolio-value').textContent = fmtMoney(total);
+  }
+
+  function renderPrices(b) {
+    if (activeBotId !== b.id) return;
+    const companies = b.prices || [];
+    $('prices-count').textContent = companies.length + ' companies';
+    if (!companies.length) {
+      priceList.innerHTML = '<div class="empty-state">Waiting for market data…</div>';
+      return;
+    }
+    const sorted = [...companies].sort((a, b) => a.price - b.price);
+    priceList.innerHTML = '';
+    for (const c of sorted) {
+      const row = document.createElement('div');
+      row.className = 'price-row';
+      const prev = b.priceCache.get(c.name);
+      let changeHTML = '<div class="change flat">—</div>';
+      if (prev !== undefined && prev !== c.price) {
+        const diff = c.price - prev;
+        const pct = ((diff / prev) * 100).toFixed(2);
+        const cls = diff > 0 ? 'up' : 'down';
+        const arrow = diff > 0 ? '▲' : '▼';
+        changeHTML = '<div class="change ' + cls + '">' + arrow + ' ' + Math.abs(pct) + '%</div>';
+        row.classList.add(diff > 0 ? 'flash-up' : 'flash-down');
+      }
+      const investors = (c.investors != null) ? c.investors + ' investors · ' : '';
+      const pool = (c.stockPoolFree != null) ? c.stockPoolFree + ' pool free' : 'pool unknown';
+      row.innerHTML =
+        '<div><div class="name">' + escapeHtml(c.name) + '</div>' +
+        '<div class="sub">' + investors + pool + '</div></div>' +
+        '<div class="amount">$' + c.price.toLocaleString('en-US') + '</div>' +
+        changeHTML;
+      priceList.appendChild(row);
+      b.priceCache.set(c.name, c.price);
+    }
+  }
+
+  function renderPortfolio(b) {
+    if (activeBotId !== b.id) return;
+    const pf = b.portfolio;
+    if (!pf) {
+      portfolioList.innerHTML = '<div class="empty-state">Awaiting portfolio sync…</div>';
+      $('holdings-count').textContent = '0 positions';
+      return;
+    }
+    const companies = pf.companies || {};
+    const entries = Object.values(companies).filter(e => (e.shares || e.ownedShares || 0) > 0);
+    $('holdings-count').textContent = entries.length + ' positions';
+
+    const summary = pf.summary || {};
+    $('pf-invested').textContent = fmtMoney(summary.moneyInvested);
+    const unreal = Number(summary.unrealizedProfit) || 0;
+    const real = Number(summary.realizedProfit) || 0;
+    $('pf-unrealized').textContent = fmtMoney(unreal, { sign: true });
+    $('pf-unrealized').style.color = unreal > 0 ? 'var(--up)' : unreal < 0 ? 'var(--down)' : 'var(--text)';
+    $('pf-realized').textContent = fmtMoney(real, { sign: true });
+    $('pf-realized').style.color = real > 0 ? 'var(--up)' : real < 0 ? 'var(--down)' : 'var(--text)';
+
+    if (!entries.length) {
+      portfolioList.innerHTML = '<div class="empty-state">No shares owned yet</div>';
+      return;
+    }
+    portfolioList.innerHTML = '';
+    entries.sort((a, b) => (b.shares || b.ownedShares) - (a.shares || a.ownedShares));
+    for (const entry of entries) {
+      const shares = Number(entry.shares || entry.ownedShares || 0);
+      const avgBuy = Number(entry.avgBuy || entry.averageBuyPrice || 0);
+      const currentPrice = b.priceCache.get(entry.company) ?? Number(entry.currentPrice || 0);
+      const value = shares * currentPrice;
+      const profit = shares * (currentPrice - avgBuy);
+      const profitCls = profit > 0 ? 'var(--up)' : profit < 0 ? 'var(--down)' : 'var(--text)';
+      const h = document.createElement('div');
+      h.className = 'holding';
+      h.innerHTML =
+        '<div><div class="h-name">' + escapeHtml(entry.company) + '</div>' +
+        '<div class="h-sub">Avg $' + avgBuy.toFixed(0) + ' · Now $' + currentPrice.toFixed(0) + '</div></div>' +
+        '<div class="h-cell"><span class="cell-label">Shares</span>' + shares + '</div>' +
+        '<div class="h-cell"><span class="cell-label">Value</span>' + fmtMoney(value) + '</div>' +
+        '<div class="h-cell" style="color:' + profitCls + '"><span class="cell-label">P/L</span>' + fmtMoney(profit, { sign: true }) + '</div>';
+      portfolioList.appendChild(h);
+    }
+  }
+
+  function renderLogs(b) {
+    if (activeBotId !== b.id) return;
+    $('log-count').textContent = b.logs.length + ' events';
+    termLog.innerHTML = '';
+    for (const entry of b.logs.slice(-MAX_VISIBLE_LOGS)) {
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      const level = String(entry.level || 'INFO').toUpperCase();
+      line.innerHTML =
+        '<span class="log-time">' + fmtTime(entry.time) + '</span>' +
+        '<span class="log-level lvl-' + level + '">' + level + '</span>' +
+        '<span class="log-msg">' + escapeHtml(entry.message) + '</span>';
+      termLog.appendChild(line);
+    }
+    termLog.scrollTop = termLog.scrollHeight;
+  }
+
+  function appendLog(b, entry) {
+    b.logs.push(entry);
+    if (b.logs.length > MAX_VISIBLE_LOGS) b.logs.shift();
+    if (activeBotId !== b.id) return;
+    scheduleLogRender(b.id);
+  }
+
+  function renderChat(b) {
+    if (activeBotId !== b.id) return;
+    $('chat-count').textContent = b.chat.length + ' messages';
+    if (!b.chat.length) {
+      chatLog.innerHTML = '<div class="empty-state">Waiting for Minecraft chat…</div>';
+      return;
+    }
+    chatLog.innerHTML = '';
+    for (const entry of b.chat.slice(-MAX_VISIBLE_LOGS)) {
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      line.innerHTML =
+        '<span class="log-time">' + fmtTime(entry.time) + '</span>' +
+        '<span class="log-level lvl-CHAT">CHAT</span>' +
+        '<span class="log-msg">' + escapeHtml(entry.message) + '</span>';
+      chatLog.appendChild(line);
+    }
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  function appendChat(b, entry) {
+    const message = String(entry.message || '').replace(/^\[CHAT\]\s*/, '').trim();
+    if (!message) return;
+    b.chat.push({ ...entry, message: message.replace(/\$\$/g, '$') });
+    if (b.chat.length > MAX_VISIBLE_LOGS) b.chat.shift();
+    renderChat(b);
+  }
+
+  function scheduleLogRender(botId) {
+    if (pendingLogRenders.has(botId)) return;
+    pendingLogRenders.add(botId);
+    requestAnimationFrame(() => {
+      pendingLogRenders.delete(botId);
+      const bot = botsById.get(botId);
+      if (bot && activeBotId === botId) renderLogs(bot);
+    });
+  }
+
+  // --- Add bot form ---
+  $('add-bot-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = $('new-username').value.trim();
+    const err = $('add-error');
+    err.textContent = '';
+    if (!username) { err.textContent = 'Username required'; return; }
+    try {
+      const res = await fetch('/bots', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+      });
+      const body = await res.json();
+      if (!body.ok) { err.textContent = body.error || 'Failed to add bot'; return; }
+      $('new-username').value = '';
+    } catch (e) {
+      err.textContent = 'Network error: ' + e.message;
+    }
+  });
+
+  // --- Commands ---
+  async function sendCommand(cmd) {
+    if (!cmd.trim()) return;
+    if (!activeBotId) { alert('Select a bot first'); return; }
+    cmdHistory.push(cmd);
+    historyIdx = cmdHistory.length;
+    try {
+      await fetch('/bots/' + encodeURIComponent(activeBotId) + '/command', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ command: cmd })
+      });
+    } catch (e) {
+      const b = botsById.get(activeBotId);
+      if (b) appendLog(b, { time: new Date().toISOString(), level: 'ERROR', message: 'Send failed: ' + e.message });
+    }
+  }
+
+  cmdInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const v = cmdInput.value; cmdInput.value = ''; sendCommand(v);
+    } else if (e.key === 'ArrowUp') {
+      if (historyIdx > 0) { historyIdx--; cmdInput.value = cmdHistory[historyIdx] || ''; e.preventDefault(); }
+    } else if (e.key === 'ArrowDown') {
+      if (historyIdx < cmdHistory.length - 1) { historyIdx++; cmdInput.value = cmdHistory[historyIdx] || ''; }
+      else { historyIdx = cmdHistory.length; cmdInput.value = ''; }
+    }
+  });
+  sendBtn.addEventListener('click', () => {
+    const v = cmdInput.value; cmdInput.value = ''; sendCommand(v); cmdInput.focus();
+  });
+
+  function setConnection(alive) {
+    if (alive) { connPill.classList.add('live'); connText.textContent = 'Live'; }
+    else { connPill.classList.remove('live'); connText.textContent = 'Reconnecting…'; }
+  }
+
+  // --- SSE ---
+  let es = null;
+  function connect() {
+    if (es) es.close();
+    es = new EventSource('/events');
+    es.onopen = () => setConnection(true);
+    // EventSource reconnects by itself. Creating replacement connections here
+    // caused repeated reconnect attempts and unnecessary browser work.
+    es.onerror = () => setConnection(false);
+
+    es.addEventListener('bot-added', (e) => {
+      const d = JSON.parse(e.data);
+      ensureBot(d.botId || d.id, d.username);
+      renderBotList();
+      if (!activeBotId) selectBot(d.botId || d.id);
+    });
+    es.addEventListener('bot-removed', (e) => {
+      const d = JSON.parse(e.data);
+      const id = d.botId || d.id;
+      botsById.delete(id);
+      if (activeBotId === id) {
+        activeBotId = null;
+        $('active-bot-name').textContent = '—';
+        $('balance').textContent = '$0';
+        $('bot-status').textContent = 'OFFLINE';
+        $('panel-prices').style.display = 'none';
+        $('panel-portfolio').style.display = 'none';
+        $('panel-terminal').style.display = 'none';
+        $('panel-chat').style.display = 'none';
+        $('no-bot-selected').style.display = '';
+      }
+      renderBotList();
+    });
+    es.addEventListener('balance', (e) => {
+      const d = JSON.parse(e.data);
+      const b = ensureBot(d.botId);
+      b.balance = d.balance;
+      renderBotList();
+      updateHeader(b);
+    });
+    es.addEventListener('status', (e) => {
+      const d = JSON.parse(e.data);
+      const b = ensureBot(d.botId);
+      b.status = d.status;
+      renderBotList();
+      updateHeader(b);
+    });
+    es.addEventListener('prices', (e) => {
+      const d = JSON.parse(e.data);
+      const b = ensureBot(d.botId);
+      b.prices = d.companies;
+      renderPrices(b);
+      updateHeader(b);
+    });
+    es.addEventListener('portfolio', (e) => {
+      const d = JSON.parse(e.data);
+      const b = ensureBot(d.botId);
+      b.portfolio = d;
+      renderPortfolio(b);
+      updateHeader(b);
+    });
+    es.addEventListener('log', (e) => {
+      const d = JSON.parse(e.data);
+      const b = ensureBot(d.botId);
+      if (/^\[CHAT\]\s*<[^>]+>\s*\S/.test(String(d.message || ''))) {
+        appendChat(b, { time: d.time, level: 'CHAT', message: d.message });
+      } else {
+        appendLog(b, { time: d.time, level: d.level, message: d.message });
+      }
+    });
+    es.addEventListener('chat', (e) => {
+      const d = JSON.parse(e.data);
+      const b = ensureBot(d.botId);
+      appendChat(b, { time: d.time, level: 'CHAT', message: d.message });
+    });
+  }
+  connect();
+  $('new-username').focus();
+})();
+</script>
+</body>
+</html>

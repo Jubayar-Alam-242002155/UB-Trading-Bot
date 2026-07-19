@@ -1,0 +1,20 @@
+{
+  "name": "tradingbot",
+  "version": "1.0.0",
+  "description": "Modular Mineflayer-based Minecraft trading bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"No tests configured yet\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "mineflayer": "4.37.1"
+  }
+}

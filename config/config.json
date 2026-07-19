@@ -1,0 +1,87 @@
+{
+  "server": {
+    "host": "play.unitedbangla.fun",
+    "port": 25565
+  },
+  "account": {
+    "username": "",
+    "password": "",
+    "auth": "offline"
+  },
+  "reconnect": {
+    "enabled": true,
+    "delayMs": 30000,
+    "maxDelayMs": 120000,
+    "backoffMultiplier": 2,
+    "jitterMs": 5000,
+    "maxAttempts": 10
+  },
+  "manualVerification": {
+    "enabled": true,
+    "fallbackAfterAttempts": 3,
+    "retryCommand": "retry"
+  },
+  "manualControl": {
+    "enabled": true,
+    "lookStepDegrees": 20
+  },
+  "market": {
+    "command": "/stockmarket",
+    "minCheckIntervalMs": 30000,
+    "maxCheckIntervalMs": 50000,
+    "updateKeywords": [
+      "market update",
+      "market updated",
+      "market crash",
+      "market rise",
+      "stock update",
+      "stocks updated",
+      "stock market",
+      "ticker"
+    ],
+    "marketAnnouncementDedupMs": 5000,
+    "mainWindowTitleContains": "UB Stock Market",
+    "tickerItemName": "Live Market Ticker",
+    "postLoginHomeCommand": "/home home1",
+    "postLoginTeleportTimeoutMs": 6000,
+    "postLoginTeleportFallbackDelayMs": 3000,
+    "postLoginTeleportMovementThreshold": 3,
+    "postLoginTeleportSuccessKeywords": [
+      "teleport",
+      "warped",
+      "home"
+    ],
+    "buyConfirmButtonTimeoutMs": 10000,
+    "buyConfirmationResultTimeoutMs": 12000,
+    "sellConfirmButtonTimeoutMs": 10000,
+    "sellConfirmationResultTimeoutMs": 12000,
+    "guiOpenTimeoutMs": 15000,
+    "guiStepTimeoutMs": 10000,
+    "guiActionDelayMs": 700
+  },
+  "trading": {
+    "enabled": true,
+    "reserveCash": 200,
+    "maxAllocationPerCompany": 0.35,
+    "maxSharesPerCompany": 500,
+    "marketMinPrice": 800,
+    "marketMaxPrice": 1200,
+    "fallbackBuyBelow": 900,
+    "fallbackSellAbove": 1100,
+    "cooldownMs": 20000,
+    "minHoldDurationMs": 120000,
+    "buyAggressiveness": 1,
+    "sellAggressiveness": 1,
+    "scoreThresholdBuy": 0.55,
+    "scoreThresholdSell": 0.55,
+    "rollingWindowSize": 30
+  },
+  "debug": {
+    "enabled": true,
+    "logWindowContents": true,
+    "logClicks": true,
+    "logParsedPrices": false,
+    "logDecisions": false
+  },
+  "logLevel": "info"
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Bot · Chat Terminal</title>
+<style>
+  :root { --bg:#0a0e14; --panel:#12171f; --panel2:#1a2029; --border:#2a3441; --text:#e6edf3; --muted:#77869a; --accent:#7dd3fc; --up:#34d399; --warn:#fbbf24; --down:#f87171; }
+  * { box-sizing:border-box; } html,body { height:100%; margin:0; }
+  body { background:var(--bg); color:var(--text); font:14px ui-monospace,Consolas,monospace; }
+  .app { height:100%; display:grid; grid-template-rows:auto 1fr auto; gap:12px; padding:16px; }
+  header,.terminal,.composer { background:var(--panel); border:1px solid var(--border); border-radius:10px; }
+  header { display:flex; align-items:center; gap:12px; padding:12px 16px; }
+  h1 { margin:0; font-size:15px; letter-spacing:.5px; } .status { color:var(--muted); font-size:12px; margin-left:auto; }
+  .dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--down); margin-right:6px; } .live .dot { background:var(--up); }
+  select,input,button { font:inherit; } select,input { background:var(--panel2); color:var(--text); border:1px solid var(--border); border-radius:6px; }
+  select { padding:8px; min-width:180px; } .terminal { overflow:auto; padding:8px; }
+  .line { display:grid; grid-template-columns:78px 62px 1fr; gap:10px; padding:3px 6px; line-height:1.45; white-space:pre-wrap; overflow-wrap:anywhere; }
+  .line:hover { background:var(--panel2); } .time { color:var(--muted); } .level { font-weight:700; } .INFO,.CHAT { color:var(--accent); } .WARN { color:var(--warn); } .ERROR { color:var(--down); } .TRADE { color:var(--up); }
+  .composer { display:grid; grid-template-columns:auto 1fr auto; gap:10px; padding:10px; align-items:center; }
+  input { padding:11px; min-width:0; } button { background:var(--accent); color:#071018; font-weight:700; border:0; border-radius:6px; padding:11px 16px; cursor:pointer; }
+  .hint { color:var(--muted); font-size:11px; padding:0 4px 10px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>LIVE MINECRAFT CHAT</h1>
+    <select id="bot"><option value="">Select bot…</option></select>
+    <div class="status" id="status"><span class="dot"></span>Connecting</div>
+  </header>
+  <main class="terminal" id="terminal"><div class="line"><span class="time">--:--:--</span><span class="level INFO">INFO</span><span>Select a bot to view its chat.</span></div></main>
+  <div>
+    <div class="composer"><span>&gt;</span><input id="command" autocomplete="off" placeholder="Chat message or command, e.g. /help"><button id="send">SEND</button></div>
+    <div class="hint">Enter sends · Use “/chat message” to send normal chat · Commands go only to the selected bot</div>
+  </div>
+</div>
+<script>
+(() => {
+  const terminal = document.getElementById('terminal'); const botSelect = document.getElementById('bot');
+  const command = document.getElementById('command'); const send = document.getElementById('send'); const status = document.getElementById('status');
+  const bots = new Map(); let activeBotId = localStorage.getItem('trading-terminal-bot') || ''; const MAX_LOGS = 1000;
+  const escape = (value) => String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  const time = (iso) => { try { return new Date(iso).toTimeString().slice(0,8); } catch (_) { return '--:--:--'; } };
+  function ensure(id, username) { if (!bots.has(id)) bots.set(id,{ id, username:username || id, logs:[] }); const b=bots.get(id); if (username) b.username=username; return b; }
+  function options() { botSelect.innerHTML='<option value="">Select bot…</option>'; for (const b of bots.values()) { const o=document.createElement('option'); o.value=b.id; o.textContent=b.username; if (b.id===activeBotId) o.selected=true; botSelect.appendChild(o); } }
+  function render() { const b=bots.get(activeBotId); if (!b) return; if (!b.logs.length) { terminal.innerHTML='<div class="line"><span class="time">--:--:--</span><span class="level INFO">INFO</span><span>Waiting for Minecraft chat…</span></div>'; return; } terminal.innerHTML=b.logs.slice(-MAX_LOGS).map(e => '<div class="line"><span class="time">'+time(e.time)+'</span><span class="level '+escape(String(e.level||'INFO').toUpperCase())+'">'+escape(String(e.level||'INFO').toUpperCase())+'</span><span>'+escape(e.message)+'</span></div>').join(''); terminal.scrollTop=terminal.scrollHeight; }
+  botSelect.addEventListener('change', () => { activeBotId=botSelect.value; localStorage.setItem('trading-terminal-bot',activeBotId); render(); command.focus(); });
+  async function submit() { const value=command.value.trim(); if (!value || !activeBotId) return; command.value=''; await fetch('/bots/'+encodeURIComponent(activeBotId)+'/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({command:value})}); }
+  send.addEventListener('click',submit); command.addEventListener('keydown',(e)=>{ if(e.key==='Enter') submit(); });
+  const es=new EventSource('/events'); es.onopen=()=>status.innerHTML='<span class="dot"></span>Live'; es.onerror=()=>status.innerHTML='<span class="dot"></span>Reconnecting';
+  es.addEventListener('bot-added',e=>{const d=JSON.parse(e.data); ensure(d.botId||d.id,d.username); if(!activeBotId) activeBotId=d.botId||d.id; options(); render();});
+  es.addEventListener('bot-removed',e=>{const d=JSON.parse(e.data); bots.delete(d.botId||d.id); if(activeBotId===(d.botId||d.id)) activeBotId=''; options(); terminal.innerHTML='';});
+  es.addEventListener('chat',e=>{const d=JSON.parse(e.data); const b=ensure(d.botId); b.logs.push({time:d.time,level:d.level,message:d.message.replace(/^\[CHAT\]\s*/, '')}); if(b.logs.length>MAX_LOGS)b.logs.shift(); if(d.botId===activeBotId)render();});
+})();
+</script>
+</body>
+</html>
