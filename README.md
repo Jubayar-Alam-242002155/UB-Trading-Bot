@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TradingBot
 
 Professional modular Minecraft Java Edition trading bot built with Mineflayer.
@@ -89,3 +90,7 @@ Type commands in the same terminal while the bot is running:
 - `move <forward|back|left|right|jump|sprint|sneak> <on|off>`
 - `stop`
 - `say <message>`
+=======
+# UB-Trading-Bot
+A smart Minecraft Java trading bot built with Mineflayer. Features automated stock trading, portfolio tracking, GUI parsing, event-driven market monitoring, survival automation, death recovery, and intelligent buy/sell strategies for custom economy servers.
+>>>>>>> 90d3672329dd117ce6285e611eb2598c7e4b0f25
